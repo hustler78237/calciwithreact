@@ -11,6 +11,39 @@ function Calci() {
     function handleremove() {
         setInput('');
     }
+    
+    
+    function extractValue(input) {
+        input = String(input);
+        let d = input.match(/\d+/g);
+        let e = input.match(/[+\-*/]/g);
+        // a , c = inputs by user
+        let a = d ? d[0] : null;
+        let c = d ? d[1] : null;
+        // f = operators
+        let f = e ? e[0] : null;
+        return [a , c, f];
+    }
+
+    const[a, c, f] = extractValue(input);
+
+    function handleEval(a,c,f) {
+
+        let g = parseFloat(a);
+        let h = parseFloat(c);
+
+        if (f === "+") {
+            let m = g+h;
+            setInput(m);
+        } else if( f === "-"){
+            let n = g-h;
+            setInput(n);
+        } else if( f ==="*"){
+            let o = g*h;
+            setInput(o);
+        }
+    }
+
 
     return (
         <div className='min-h-screen bg-slate-200 flex justify-center items-center'>
@@ -37,7 +70,7 @@ function Calci() {
                         <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('X')}>X</button>
                         <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('/')}>/</button>
                         <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=> handleremove()}>AC</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>=</button>
+                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleEval(a,c,f)}>=</button>
                         <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('.')}>.</button>
                         <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('0')}>0</button>
                         <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('%')}>%</button>

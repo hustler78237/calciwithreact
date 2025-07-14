@@ -15,8 +15,12 @@ function Calci() {
     
     function extractValue(input) {
         input = String(input);
-        let d = input.match(/\d+/g);
+
+        let d = input.match(/-?\d+(\.\d+)?/g);
+        d = d ? d.map(Number) : [];
+
         let e = input.match(/[+\-*/]/g);
+
         // a , c = inputs by user
         let a = d ? d[0] : null;
         let c = d ? d[1] : null;
@@ -32,6 +36,7 @@ function Calci() {
         let g = parseFloat(a);
         let h = parseFloat(c);
 
+
         if (f === "+") {
             let m = g+h;
             setInput(m);
@@ -41,7 +46,13 @@ function Calci() {
         } else if( f ==="*"){
             let o = g*h;
             setInput(o);
-        }
+        } else if( f === "/"){
+            let p = g/h; 
+            setInput(p);
+       } else if(f === "%"){
+           let q = g*(1/100);
+           setInput(q) 
+       }
     }
 
 

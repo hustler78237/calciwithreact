@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { useState } from "react";
 
 function Calci() {
@@ -19,7 +19,7 @@ function Calci() {
         let d = input.match(/-?\d+(\.\d+)?/g);
         d = d ? d.map(Number) : [];
 
-        let e = input.match(/[+\-*/]/g);
+        let e = input.match(/[+\-*/%]/g);
 
         // a , c = inputs by user
         let a = d ? d[0] : null;
@@ -58,7 +58,7 @@ function Calci() {
 
     return (
         <div className='min-h-screen bg-slate-200 flex justify-center items-center'>
-            <div className='bg-red-200 box-border h-[32rem] w-96 p-8 border-4 flex flex-col gap-y-8'>
+            <div className='bg-slate-700 box-border h-[32rem] w-96 p-8 border-4 flex flex-col gap-y-8'>
                 <div className=''>
                     <input className='border border-gray-400 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full' type='text' id='input' value={input}></input>
                 </div>

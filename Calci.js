@@ -34,11 +34,19 @@ function Calci() {
         if (logMatch) {
             return [logMatch[1], null, 'log'];
         }
+        const sqrtMatch = input.match(/sqrt\(([^)]+)\)/);
+        if (sqrtMatch){
+            return [sqrtMatch[1] ,null, 'sqrt']
+        }
+        const cqrtMatch = input.match(/cqrt\(([^)]+)\)/);
+        if (cqrtMatch) {
+            return [cqrtMatch[1], null, 'cqrt']
+        }
 
         let d = input.match(/-?\d+(\.\d+)?/g);
         d = d ? d.map(Number) : [];
 
-        let e = input.match(/(\+|\-|\*|\/|%|\^2|\^3)/g);
+        let e = input.match(/(\+|\-|\*|\/|%|\^2|\^3|\sqrt|\cqrt)/g);
 
         let a = d ? d[0] : null;
         let c = d ? d[1] : null;
@@ -47,6 +55,7 @@ function Calci() {
     }
 
     const[a, c, f] = extractValue(input);
+    
 
     function handleEval(a,c,f) {
 
@@ -87,7 +96,13 @@ function Calci() {
        } else if (f === 'log') {
            let t = Math.log10(g);
            setInput(t.toString());
-       }
+        } else if ( f === 'sqrt') {
+            let t = g**(1/2);
+            setInput(t.toString());
+        } else if ( f === 'cqrt') {
+            let t = g**(1/3);
+            setInput(t.toString());
+        }
     }
 
 
@@ -97,40 +112,42 @@ function Calci() {
                 <div>
                     <input className='border border-gray-400 rounded-lg px-4 py-3 text-xl md:text-2xl focus:outline-none focus:ring-2 focus:ring-blue-400 w-full bg-slate-100' type='text' id='input' value={input} readOnly></input>
                 </div>
-                <div className='grid grid-cols-2 gap-4 md:gap-8'>
-                    <div className='grid grid-cols-3 gap-2 md:gap-4'>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('1')}>1</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('2')}>2</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('3')}>3</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('4')}>4</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('5')}>5</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('6')}>6</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('7')}>7</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('8')}>8</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('9')}>9</button>
-                        {/* <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>0</button> */}
-                    </div>
-                    <div className='grid grid-cols-3 gap-2'>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('+')}>+</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('-')}>-</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('X')}>X</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('/')}>/</button>
-                        <button type='button' className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleremove()}>AC</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleEval(a,c,f)}>=</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('.')}>.</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('0')}>0</button>
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('%')}>%</button>                        
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('^2')}>x^2</button>                       
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('^3')}>x^3</button>                       
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('sin(')}>sin(</button>                       
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('cos(')}>cos(</button>                       
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('tan(')}>tan(</button>                       
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick('log(')}>log10(</button>                       
-                        <button type='button' className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'  onClick={()=>handleclick(')')}>)</button>                       
-                    </div>
+                <div className='grid grid-cols-4 gap-3 md:gap-5'>
+                    {/* Numbers */}
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>7</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>8</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>9</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('/')}>/</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>4</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>5</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>6</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('*')}>*</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>1</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>2</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>3</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('-')}>-</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('0')}>0</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('.')}>.</button>
+                    <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleEval(a,c,f)}>=</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('+')}>+</button>
+                </div>
+                <div className='grid grid-cols-4 gap-3 mt-4'>
+                    {/* Scientific & Utility */}
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('%')}>%</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('^2')}>x^2</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('^3')}>x^3</button>
+                    <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleremove()}>AC</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('sin(')}>sin(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('cos(')}>cos(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('tan(')}>tan(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('log(')}>log10(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('sqrt(')}>sqrt(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('cqrt(')}>cqrt(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick(')')}>)</button>
+                </div>
                 </div>
             </div>
-        </div>)
+   )
 }
 
 export default Calci;

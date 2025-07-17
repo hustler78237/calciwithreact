@@ -46,7 +46,13 @@ function Calci() {
             return [cqrtMatch[1], null, 'cqrt']
         }
 
-        let d = input.match(/-?\d+(\.\d+)?/g);
+        // Handle leading negative number
+        let d;
+        if (input[0] === '-') {
+            d = input.match(/-?\d+(\.\d+)?/g);
+        } else {
+            d = input.match(/\d+(\.\d+)?/g);
+        }
         d = d ? d.map(Number) : [];
 
         let e = input.match(/(\+|\-|\*|\/|%|\^2|\^3|\sqrt|\cqrt)/g);
@@ -58,6 +64,7 @@ function Calci() {
     }
 
     const[a, c, f] = extractValue(input);
+    console.log(f);
     
 
     function handleEval(a,c,f) {
@@ -145,7 +152,7 @@ function Calci() {
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('tan(')}>tan(</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('log(')}>log10(</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('sqrt(')}>sqrt(</button>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('cqrt(')}>cqrt(</button>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick('cqrt(')}>cbrt(</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handleclick(')')}>)</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={()=>handlebackspace('')}>rmv</button>
                 </div>

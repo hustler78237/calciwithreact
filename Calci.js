@@ -13,11 +13,10 @@ function Calci() {
     function handleremove() {
         setInput('');
     }
+
     function handlebackspace() {
         try {
-
             setInput(input.slice(0, -1));
-
         } catch (error) {
             alert(error = "please do not use rmv for removing result it only remove numbers when you write you calculation like 2+5 , 12+5 rather than use AC");
         }
@@ -32,7 +31,7 @@ function Calci() {
         // console.log(sinMatch);
         // console.log(typeof(sinMatch));
         if (sinMatch) {
-            // console.log([sinMatch[1, null, 'sin']]);
+            // console.log([sinMatch[1], null, 'sin']);
             return [sinMatch[1], null, 'sin'];
         }
         const cosMatch = input.match(/cos\(([^)]+)\)/);
@@ -74,11 +73,14 @@ function Calci() {
         return [a, c, f];
     }
 
-    const [a, c, f] = extractValue(input);
-    // console.log(f);
+   
 
+    function handleEval() {
 
-    function handleEval(a, c, f) {
+        const [a, c, f] = extractValue(input);
+        console.log(f);
+        console.log(a);
+        console.log(c);
 
         let g = parseFloat(a);
         let h = parseFloat(c);
@@ -94,7 +96,7 @@ function Calci() {
             let o = g * h;
             setInput(o);
         } else if (f === "/") {
-            let p = g / h;
+            let p = h ===0? "Denominator does not equal to zero" : g / h;
             setInput(p);
         } else if (f === "%") {
             let q = g * (1 / 100);
@@ -149,7 +151,7 @@ function Calci() {
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => handleclick('-')}>-</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => handleclick('0')}>0</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => handleclick('.')}>.</button>
-                    <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' onClick={() => handleEval(a, c, f)}>=</button>
+                    <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' onClick={() => handleEval()}>=</button>
                     <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => handleclick('+')}>+</button>
                 </div>
                 <div className='grid grid-cols-4 gap-3 mt-4'>
